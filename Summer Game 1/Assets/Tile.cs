@@ -30,6 +30,7 @@ public class Tile : MonoBehaviour {
     public void createTile(int _index)
     {
         m_index = _index;
+        GetComponentInChildren<TextMesh>().text = m_index.ToString();
     }
 
     public bool clicked()
@@ -43,5 +44,6 @@ public class Tile : MonoBehaviour {
             return m_isBomb;
         }
     }
+
 
 }

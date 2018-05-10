@@ -8,18 +8,18 @@ public class TileManager : MonoBehaviour {
 
     //public Tile[] m_tiles;
     public List<GameObject> m_tiles;
-    public int m_size = 16;
+    public int m_size;
 
     public GameObject m_emptyTile;
 
-    private int m_width, m_height;
+    private float m_width;
 
 	// Use this for initialization
 	void Start ()
     {
         createMap();
 
-        Mathf.Floor(Mathf.Sqrt(m_size));
+
     }
 	
 	// Update is called once per frame
@@ -30,14 +30,20 @@ public class TileManager : MonoBehaviour {
 
     void createMap()
     {
-        for(int i = 0; i < m_size; i++)
+        for(int j = 0; j < m_size; j++)
         {
-            GameObject _tile = (GameObject)Instantiate(m_emptyTile);
-            m_tiles.Add(_tile);
-            _tile.transform.position += new Vector3 ((m_tileSpriteSize * i) * 2/3,
-                                                    m_tileSpriteSize / ((i % 2)+1),
-                                                     0);
-            Debug.Log(i % 2);
+            for (int i = 0; i < m_size; i++)
+            {
+                GameObject _tile = (GameObject)Instantiate(m_emptyTile);
+
+                _tile.GetComponent<Tile>().createTile(m_tiles.Count);
+
+                m_tiles.Add(_tile);
+
+                _tile.transform.position += new Vector3((m_tileSpriteSize * i) * (m_tileSpriteSize * 0.75f),
+                                                        m_tileSpriteSize / ((i % 2) + 1) + (j),
+                                                         0);
+            }
         }
     }
 }
