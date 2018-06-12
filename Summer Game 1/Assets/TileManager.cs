@@ -19,14 +19,99 @@ public class TileManager : MonoBehaviour {
     {
         createMap();
 
+        for (int i = 0; i < m_tiles.Count; i++)
+        {
+            m_tiles[i].GetComponent<Tile>().m_isBomb = true;
+        }
+
+        for (int i = 0; i < m_tiles.Count; i++)
+        {
+            ClickTile(i);
+        }
 
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity);
+            if (hit)
+            {
+                //hit.collider.GetComponentInParent<Tile>().m_index
+            }
+        }
+
+    }
+
+    void ClickTile(int _index)
+    {
+        //needs to know which ways to check, going clockwise starting up
+        //bool[] directions = new bool[] { false, false, false, false, false, false } ;
         
-	}
+        if(_index > m_size)
+        {
+            //can check down
+            if(m_tiles[_index - m_size].GetComponent<Tile>().m_isBomb)
+            {
+                m_tiles[_index].GetComponent<Tile>().m_surroundingBombs++;
+            }
+
+            if (_index % m_size == 0)
+            {
+                //check right
+                if (m_tiles[_index - m_size + 1].GetComponent<Tile>().m_isBomb)
+                {
+                    m_tiles[_index].GetComponent<Tile>().m_surroundingBombs++;
+                }
+
+            }
+
+            if (_index % m_size == m_size - 1)
+            {
+                //check left
+                if (m_tiles[_index - m_size - 1].GetComponent<Tile>().m_isBomb)
+                {
+                    m_tiles[_index].GetComponent<Tile>().m_surroundingBombs++;
+                }
+            }
+
+        }
+
+        if(_index < m_tiles.Count - m_size)
+        {
+            //can check up
+
+            if (m_tiles[_index + m_size].GetComponent<Tile>().m_isBomb)
+            {
+                m_tiles[_index].GetComponent<Tile>().m_surroundingBombs++;
+            }
+
+            if (_index % m_size == 0)
+            {
+                //check right
+                if (m_tiles[_index + m_size + 1].GetComponent<Tile>().m_isBomb)
+                {
+                    m_tiles[_index].GetComponent<Tile>().m_surroundingBombs++;
+                }
+
+            }
+
+            if (_index % m_size == m_size - 1)
+            {
+                //check left
+                if (m_tiles[_index + m_size - 1].GetComponent<Tile>().m_isBomb)
+                {
+                    m_tiles[_index].GetComponent<Tile>().m_surroundingBombs++;
+                }
+            }
+
+        }
+
+
+    }
 
     void createMap()
     {

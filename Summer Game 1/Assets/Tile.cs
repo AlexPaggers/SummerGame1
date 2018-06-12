@@ -5,9 +5,11 @@ using UnityEngine;
 public class Tile : MonoBehaviour {
 
     [SerializeField]
-    private int m_index;
+    public int m_index;
 
-    public bool m_isBomb { get; set; }
+    public bool m_isBomb;
+
+    public int m_surroundingBombs;
 
 
 	// Use this for initialization
@@ -31,6 +33,7 @@ public class Tile : MonoBehaviour {
     {
         m_index = _index;
         GetComponentInChildren<TextMesh>().text = m_index.ToString();
+        this.gameObject.name = _index.ToString();
     }
 
     public bool clicked()

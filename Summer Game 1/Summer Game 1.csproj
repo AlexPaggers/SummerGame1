@@ -78,6 +78,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\CamMotion.cs" />
     <Compile Include="Assets\Tile.cs" />
     <Compile Include="Assets\TileManager.cs" />
   </ItemGroup>
